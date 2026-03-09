@@ -19,13 +19,13 @@ export async function POST(req: NextRequest) {
       SELECT id, username, password_hash FROM users WHERE username = ${username} LIMIT 1
     `;
     if (rows.length === 0) {
-      return NextResponse.json({ error: '用户名或密码错误' }, { status: 401 });
+      return NextResponse.json({ error: '该用户不存在' }, { status: 404 });
     }
 
     const user = rows[0];
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) {
-      return NextResponse.json({ error: '用户名或密码错误' }, { status: 401 });
+      return NextResponse.json({ error: '密码错误' }, { status: 401 });
     }
 
     const token = await signToken({ userId: user.id, username: user.username });

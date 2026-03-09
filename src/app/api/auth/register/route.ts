@@ -26,16 +26,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '用户名已被占用' }, { status: 409 });
     }
 
-    const passwordHash = await bcrypt.hash(password, 12);
+    const passwordHash = await bcrypt.hash(password, 10);
     const rows = await sql`
       INSERT INTO users (username, password_hash)
       VALUES (${username}, ${passwordHash})
       RETURNING id, username
     `;
     const user = rows[0];
-    const token = await signToken({ userId: user.id, username: user.username });
 
-    const res = NextResponse.json({ success: true, username: user.username });
+    let token: string;
+    try {
+      token = await signToken({ userId: Number(user.id), username: String(user.username) });
+    } catch (tokenErr) {
+      console.error('signToken error:', tokenErr);
+      // 用户已创建成功，JWT 签发失败不影响数据，直接返回成功让用户去登录
+      return NextResponse.json({ success: true, username: user.username });
+    }
+
+    const res = NextResponse.json({ success: true, username: String(user.username) });
     const cookieOpts = {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax' as const,
@@ -43,10 +51,12 @@ export async function POST(req: NextRequest) {
       path: '/',
     };
     res.cookies.set(AUTH_COOKIE, token, { ...cookieOpts, httpOnly: true });
-    res.cookies.set(USER_COOKIE, user.username, { ...cookieOpts, httpOnly: false });
+    res.cookies.set(USER_COOKIE, String(user.username), { ...cookieOpts, httpOnly: false });
     return res;
-  } catch (err) {
-    console.error('Register error:', err);
-    return NextResponse.json({ error: '注册失败，请稍后重试' }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('Register error:', msg);
+    const detail = process.env.NODE_ENV !== 'production' ? `（${msg}）` : '';
+    return NextResponse.json({ error: `注册失败，请稍后重试${detail}` }, { status: 500 });
   }
 }
