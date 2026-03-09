@@ -19,16 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={cn(inter.className, "bg-[#406b9e] flex justify-center min-h-screen")}>
-        <div className="w-full max-w-[1024px] flex flex-col font-sans min-h-screen">
-             <div className="flex-1 bg-white flex flex-col">
-                <Navbar />
-                <main className="flex-1 p-4">
-                    {children}
-                </main>
-             </div>
-             <Footer />
-        </div>
+      <body className={cn(inter.className, "bg-gray-50 text-slate-900 min-h-screen flex flex-col font-sans mb-0")}>
+        <Navbar />
+        <main className="flex-1 w-full flex flex-col">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
