@@ -2,14 +2,34 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ChevronDown, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
+import { useState, useEffect } from "react";
+
+function getAuthUserFromCookie(): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(/(?:^|; )auth_user=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUsername(getAuthUserFromCookie());
+  }, [pathname]);
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setUsername(null);
+    setMobileOpen(false);
+    router.push('/');
+    router.refresh();
+  }
 
   return (
     <nav className="bg-[#1c3c66] text-white select-none">
@@ -39,7 +59,23 @@ export function Navbar() {
             <DropdownItem href="/health/evaluate" label="身体健康评估" />
           </NavDropdown>
 
-          <NavItem href="/auth/login" label="登录/注册" active={pathname === "/auth/login"} />
+          {username ? (
+            <li className="flex items-center h-full pl-4 gap-1">
+              <span className="flex items-center gap-1.5 text-sm text-blue-200 whitespace-nowrap">
+                <User className="w-3.5 h-3.5" />
+                {username}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1 ml-2 px-3 h-full hover:bg-[#3c5699] transition-colors text-sm font-medium whitespace-nowrap"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                退出
+              </button>
+            </li>
+          ) : (
+            <NavItem href="/auth/login" label="登录/注册" active={pathname === "/auth/login"} />
+          )}
         </ul>
 
         {/* 移动端汉堡按钮 */}
@@ -68,7 +104,25 @@ export function Navbar() {
               <MobileNavItem href="/health/cure" label="高原反应与救治" active={pathname === "/health/cure"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/evaluate" label="身体健康评估" active={pathname === "/health/evaluate"} onClick={() => setMobileOpen(false)} indent />
             </MobileNavGroup>
-            <MobileNavItem href="/auth/login" label="登录/注册" active={pathname === "/auth/login"} onClick={() => setMobileOpen(false)} />
+            {username ? (
+              <>
+                <li className="px-4 py-3 border-b border-[#3c5699]/30 text-sm text-blue-200 flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  {username}
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left flex items-center gap-2 px-4 py-3 hover:bg-[#3c5699] transition-colors border-b border-[#3c5699]/30 text-sm"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    退出登录
+                  </button>
+                </li>
+              </>
+            ) : (
+              <MobileNavItem href="/auth/login" label="登录/注册" active={pathname === "/auth/login"} onClick={() => setMobileOpen(false)} />
+            )}
           </ul>
         </div>
       )}
