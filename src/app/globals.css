@@ -25,3 +25,116 @@ body {
     text-wrap: balance;
   }
 }
+
+/* ---- 文章专业排版 ---- */
+.article-prose {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.article-prose h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #1c3c66;
+  text-align: center;
+  border-bottom: 2px solid #d9bb79;
+  padding-bottom: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  line-height: 1.35;
+}
+
+/* 标题正下方的作者信息段落 */
+.article-prose h1 + p {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+  text-indent: 0 !important;
+  margin-top: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.article-prose h2 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #1c3c66;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.7rem;
+  border-left: 3px solid #1c3c66;
+  line-height: 1.5;
+}
+
+.article-prose h3 {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 1.25rem;
+  margin-bottom: 0.25rem;
+  padding-left: 1rem;
+}
+
+.article-prose p {
+  text-indent: 2em;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+/* 紧跟标题的段落不首行缩进 */
+.article-prose h2 + p,
+.article-prose h3 + p {
+  text-indent: 0;
+}
+
+/* 分割线后的"参考文献"标签段落 */
+.article-prose hr + p {
+  text-indent: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.article-prose hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.article-prose ol {
+  padding-left: 1.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  list-style-type: decimal;
+}
+
+.article-prose ul {
+  padding-left: 1.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}
+
+.article-prose li {
+  line-height: 1.85;
+  margin-top: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.article-prose strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.article-prose a {
+  color: #3c5699;
+  text-decoration: none;
+}
+
+.article-prose a:hover {
+  text-decoration: underline;
+}
