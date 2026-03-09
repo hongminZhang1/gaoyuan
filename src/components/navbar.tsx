@@ -17,7 +17,7 @@ export function Navbar() {
              {/* Using standard img tag for simplicity with legacy assets if dimensions unknown, 
                  but Image is better. Assuming roughly 150x45 based on css */}
              <div className="bg-white p-1">
-                <img src="/img/logo.jpg" alt="Logo" className="h-[38px] w-[120px] object-contain" />
+                <Image src="/img/logo.jpg" alt="Logo" width={120} height={38} className="h-[38px] w-[120px] object-contain" />
              </div>
           </Link>
         </div>

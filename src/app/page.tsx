@@ -1,8 +1,10 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="w-full flex-col flex items-center">
-      <div className="w-full mt-[10px]">
-         <img src="/img/01.webp.jpg" alt="Home Banner" className="w-full h-[400px] object-cover shadow-sm" />
+      <div className="w-full mt-[10px] relative h-[400px]">
+         <Image src="/img/01.webp.jpg" alt="Home Banner" fill priority sizes="100vw" className="object-cover shadow-sm" />
       </div>
     </div>
   );
