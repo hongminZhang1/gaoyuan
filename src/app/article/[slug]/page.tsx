@@ -21,7 +21,7 @@ export default function ArticlePage({ params }: PageProps) {
   }
 
   return (
-    <div className="prose prose-slate prose-lg mx-auto max-w-none p-8 bg-white/50">
+    <div className="prose prose-slate prose-lg mx-auto max-w-none p-4 md:p-8 bg-white/50">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {article.content}
       </ReactMarkdown>
