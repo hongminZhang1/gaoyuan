@@ -38,7 +38,7 @@ export default function EvaluatePage() {
 
     // Analyze conditions
     let status: 'suitable' | 'caution' | 'not_recommended' = 'suitable';
-    let reasons: string[] = [];
+    const reasons: string[] = [];
 
     // Deal breakers (Not recommended)
     if (formData.hasHeartDisease || formData.hasAsthma || formData.hasAnemia || formData.isPregnant || formData.hasSevereHighAltitudeSickness || formData.bloodPressure === 'severe') {
