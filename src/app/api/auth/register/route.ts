@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { sql, initDB } from '@/lib/db';
+import { getSql, initDB } from '@/lib/db';
 import { signToken, AUTH_COOKIE, USER_COOKIE } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     }
 
     await initDB();
+    const sql = getSql();
 
     const existing = await sql`SELECT id FROM users WHERE username = ${username} LIMIT 1`;
     if (existing.length > 0) {
@@ -39,8 +40,7 @@ export async function POST(req: NextRequest) {
       token = await signToken({ userId: Number(user.id), username: String(user.username) });
     } catch (tokenErr) {
       console.error('signToken error:', tokenErr);
-      // 用户已创建成功，JWT 签发失败不影响数据，直接返回成功让用户去登录
-      return NextResponse.json({ success: true, username: user.username });
+      return NextResponse.json({ success: true, username: String(user.username) });
     }
 
     const res = NextResponse.json({ success: true, username: String(user.username) });
@@ -56,7 +56,6 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error('Register error:', msg);
-    const detail = process.env.NODE_ENV !== 'production' ? `（${msg}）` : '';
-    return NextResponse.json({ error: `注册失败，请稍后重试${detail}` }, { status: 500 });
+    return NextResponse.json({ error: `注册失败：${msg}` }, { status: 500 });
   }
 }

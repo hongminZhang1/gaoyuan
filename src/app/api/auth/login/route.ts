@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { sql, initDB } from '@/lib/db';
+import { getSql, initDB } from '@/lib/db';
 import { signToken, AUTH_COOKIE, USER_COOKIE } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     await initDB();
+    const sql = getSql();
 
     const rows = await sql`
       SELECT id, username, password_hash FROM users WHERE username = ${username} LIMIT 1
@@ -28,9 +29,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '密码错误' }, { status: 401 });
     }
 
-    const token = await signToken({ userId: user.id, username: user.username });
+    const token = await signToken({ userId: Number(user.id), username: String(user.username) });
 
-    const res = NextResponse.json({ success: true, username: user.username });
+    const res = NextResponse.json({ success: true, username: String(user.username) });
     const cookieOpts = {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax' as const,
@@ -38,10 +39,11 @@ export async function POST(req: NextRequest) {
       path: '/',
     };
     res.cookies.set(AUTH_COOKIE, token, { ...cookieOpts, httpOnly: true });
-    res.cookies.set(USER_COOKIE, user.username, { ...cookieOpts, httpOnly: false });
+    res.cookies.set(USER_COOKIE, String(user.username), { ...cookieOpts, httpOnly: false });
     return res;
-  } catch (err) {
-    console.error('Login error:', err);
-    return NextResponse.json({ error: '登录失败，请稍后重试' }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('Login error:', msg);
+    return NextResponse.json({ error: `登录失败：${msg}` }, { status: 500 });
   }
 }
