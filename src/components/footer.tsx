@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="w-full bg-[#1c3c66] text-slate-300 text-center py-10 mt-auto border-t border-[#152e4d]">
+    <footer className="w-full bg-[#0f233f] text-slate-300 text-center py-10 mt-auto border-t border-[#0b1a2e]">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-4 md:mb-0">
           <h2 className="text-lg font-bold text-white mb-1">高原旅游网</h2>
