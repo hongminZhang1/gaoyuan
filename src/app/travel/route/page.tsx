@@ -5,12 +5,12 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 
 export default function RoutePage() {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<any>(null);
+  const mapInstance = useRef<unknown>(null);
 
   useEffect(() => {
     // 必须要配置安全密钥，否则高级图层（地形、卫星图）可能因为安全校验被拦截无法加载
     if (typeof window !== "undefined") {
-      (window as any)._AMapSecurityConfig = {
+      (window as unknown as { _AMapSecurityConfig: { securityJsCode: string } })._AMapSecurityConfig = {
         securityJsCode: process.env.NEXT_PUBLIC_AMAP_SECURITY_CODE || "",
       };
     }
@@ -46,7 +46,7 @@ export default function RoutePage() {
               top: "10px",
             },
           });
-          mapInstance.current.addControl(controlBar);
+          (mapInstance.current as { addControl: (plugin: unknown) => void }).addControl(controlBar);
 
           const toolBar = new AMap.ToolBar({
             position: {
@@ -54,7 +54,7 @@ export default function RoutePage() {
               top: "110px",
             },
           });
-          mapInstance.current.addControl(toolBar);
+          (mapInstance.current as { addControl: (plugin: unknown) => void }).addControl(toolBar);
         }
       })
       .catch((e) => {
@@ -64,7 +64,7 @@ export default function RoutePage() {
     return () => {
       // 组件卸载时销毁地图实例，释放内存
       if (mapInstance.current) {
-        mapInstance.current.destroy();
+        (mapInstance.current as { destroy: () => void }).destroy();
       }
     };
   }, []);

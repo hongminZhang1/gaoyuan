@@ -5,13 +5,13 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 
 export default function AmapContainer() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<unknown>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     // 1. 在加载 JSAPI 前设置安全密钥
-    (window as any)._AMapSecurityConfig = {
+    (window as unknown as { _AMapSecurityConfig: { securityJsCode: string | undefined } })._AMapSecurityConfig = {
       securityJsCode: process.env.NEXT_PUBLIC_AMAP_SECURITY_CODE,
     };
 
@@ -27,7 +27,7 @@ export default function AmapContainer() {
 
         // 应对 React 18 严格模式下的二次挂载，先销毁旧实例
         if (mapRef.current) {
-          mapRef.current.destroy();
+          (mapRef.current as { destroy: () => void }).destroy();
         }
 
         // 3. 初始化地图，配置 3D 视图模式和地形图
@@ -46,9 +46,9 @@ export default function AmapContainer() {
         });
 
         // 添加 3D 控件和常用控件
-        mapRef.current.addControl(new AMap.Scale());
-        mapRef.current.addControl(new AMap.ToolBar());
-        mapRef.current.addControl(
+        (mapRef.current as { addControl: (plugin: unknown) => void }).addControl(new AMap.Scale());
+        (mapRef.current as { addControl: (plugin: unknown) => void }).addControl(new AMap.ToolBar());
+        (mapRef.current as { addControl: (plugin: unknown) => void }).addControl(
           new AMap.ControlBar({
             position: {
               right: "10px",
@@ -65,7 +65,7 @@ export default function AmapContainer() {
     return () => {
       isMounted = false;
       if (mapRef.current) {
-        mapRef.current.destroy();
+        (mapRef.current as { destroy: () => void }).destroy();
         mapRef.current = null;
       }
     };
