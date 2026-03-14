@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={cn(inter.className, "bg-gray-50 text-slate-900 min-h-screen flex flex-col font-sans mb-0")}>
+      <body className={cn(inter.className, "bg-gray-50 text-slate-900 min-h-screen flex flex-col font-sans pb-14 md:pb-0")}>
         <Navbar />
         <main className="flex-1 w-full flex flex-col">
           {children}

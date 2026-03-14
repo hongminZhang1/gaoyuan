@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
+import { ChevronDown, Menu, X, LogOut, User, Home, Map, HeartPulse } from "lucide-react";
 import { useState, useEffect } from "react";
 
 function getAuthUserFromCookie(): string | null {
@@ -32,11 +32,12 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm text-slate-800 transition-all duration-300">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 md:h-[72px]">
+    <nav className="fixed bottom-0 md:bottom-auto md:sticky md:top-0 z-50 w-full bg-white/95 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-100 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.1)] md:shadow-sm text-slate-800 transition-all duration-300 pb-safe">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-[72px]">
+        {/* Logo - Desktop only or small on mobile */}
         <div className="logo flex items-center shrink-0">
           <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
-             <Image src="/img/logo.jpg" alt="Logo" width={160} height={50} className="h-[46px] w-[auto] object-contain mix-blend-multiply" />
+             <Image src="/img/logo.jpg" alt="Logo" width={160} height={50} className="h-[36px] md:h-[46px] w-[auto] object-contain mix-blend-multiply" />
           </Link>
         </div>
 
@@ -56,6 +57,8 @@ export function Navbar() {
             <DropdownItem href="/health/cure" label="高原反应与救治" />
             <DropdownItem href="/health/evaluate" label="身体健康评估" />
           </NavDropdown>
+
+          {/* AI 助手 - 桌面端 (Removed) */}
 
           {username ? (
             <li className="flex items-center h-full pl-6 gap-2 border-l border-gray-200 ml-4">
@@ -90,24 +93,27 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* 移动端展开菜单 */}
+      {/* 移动端展开菜单 (向上展开) */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full left-0 top-full">
-          <ul className="flex flex-col py-2 max-h-[80vh] overflow-y-auto">
+        <div className="md:hidden bg-white shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)] absolute w-full left-0 bottom-full rounded-t-2xl overflow-hidden border-t border-gray-100">
+          <ul className="flex flex-col py-2 max-h-[75vh] overflow-y-auto overscroll-contain">
             <MobileNavItem href="/" label="首页" active={pathname === "/"} onClick={() => setMobileOpen(false)} />
+            
             <MobileNavGroup label="高原旅游" defaultOpen={!!pathname?.startsWith("/travel")}>
               <MobileNavItem href="/travel/scenery" label="高原风光" active={pathname === "/travel/scenery"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/environment" label="环境特点" active={pathname === "/travel/environment"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/route" label="线路指南" active={pathname === "/travel/route"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/traffic" label="交通选择" active={pathname === "/travel/traffic"} onClick={() => setMobileOpen(false)} indent />
             </MobileNavGroup>
+            
             <MobileNavGroup label="高原健康" defaultOpen={!!pathname?.startsWith("/health")}>
               <MobileNavItem href="/health/study" label="反应研究文献" active={pathname === "/health/study"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/cure" label="反应与救治" active={pathname === "/health/cure"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/evaluate" label="健康评估" active={pathname === "/health/evaluate"} onClick={() => setMobileOpen(false)} indent />
             </MobileNavGroup>
+            
             {username ? (
-              <div className="mt-4 px-4 pt-4 border-t border-gray-100 pb-4 bg-gray-50">
+              <div className="mt-2 px-4 pt-4 border-t border-gray-100 pb-4 bg-gray-50">
                 <div className="flex items-center gap-2 mb-4 text-slate-700 font-medium">
                   <span className="bg-[#cbd5e1] p-1.5 rounded-full"><User className="w-5 h-5 text-[#1c3c66]" /></span>
                   {username}
