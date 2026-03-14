@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import AMapLoader from "@amap/amap-jsapi-loader";
 
 export default function RoutePage() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -15,7 +14,10 @@ export default function RoutePage() {
       };
     }
 
-    AMapLoader.load({
+    import("@amap/amap-jsapi-loader").then((AMapLoaderModule) => {
+      const AMapLoader = AMapLoaderModule.default || AMapLoaderModule;
+      
+      AMapLoader.load({
       key: process.env.NEXT_PUBLIC_AMAP_KEY || "", // 从环境变量读取 Web 端开发者 Key
       version: "2.1Beta", // 关键！开启 3D 真实地形图必须使用 2.1Beta 或更高版本
       plugins: ["AMap.ControlBar", "AMap.ToolBar"], // 缩放和旋转插件
@@ -60,6 +62,7 @@ export default function RoutePage() {
       .catch((e) => {
         console.error("加载高德地图失败", e);
       });
+    });
 
     return () => {
       // 组件卸载时销毁地图实例，释放内存

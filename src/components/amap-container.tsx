@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import AMapLoader from "@amap/amap-jsapi-loader";
 
 export default function AmapContainer() {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -16,7 +15,9 @@ export default function AmapContainer() {
     };
 
     // 2. 加载高德地图 API
-    AMapLoader.load({
+    import("@amap/amap-jsapi-loader").then((AMapLoaderModule) => {
+      const AMapLoader = AMapLoaderModule.default || AMapLoaderModule;
+      AMapLoader.load({
       key: process.env.NEXT_PUBLIC_AMAP_KEY as string, // 申请好的 Web 端开发者 Key
       version: "2.0", // 指定要加载的 JSAPI 的版本
       plugins: ["AMap.Scale", "AMap.ToolBar", "AMap.ControlBar"], // 需要使用的的插件列表
@@ -60,6 +61,7 @@ export default function AmapContainer() {
       .catch((e) => {
         console.error("加载高德地图失败: ", e);
       });
+    });
 
     // 4. 组件卸载时清理
     return () => {
