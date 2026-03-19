@@ -27,7 +27,7 @@ export default function EvaluatePage() {
 
   const [report, setReport] = useState<{ level: string; score: number } | null>(null);
 
-  const inputChange = (field: string, value: any) => {
+  const inputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -217,7 +217,7 @@ export default function EvaluatePage() {
                 onClick={() => { setReport(null); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
                 重新进行健康评估
               </button>
@@ -271,7 +271,7 @@ export default function EvaluatePage() {
             <div className="bg-white rounded-[16px] md:rounded-[24px] p-[24px] md:p-[32px] shadow-sm md:shadow-[0_12px_30px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-md transition-shadow group">
               <div className="flex items-center mb-[24px] pb-[16px] border-b border-gray-50">
                 <div className="w-[36px] h-[36px] bg-blue-50 rounded-xl flex items-center justify-center mr-[12px] text-[#002b5b]">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                 </div>
                 <h2 className="text-[17px] md:text-[19px] font-bold text-gray-800">基础生理特征</h2>
               </div>
@@ -327,7 +327,7 @@ export default function EvaluatePage() {
             <div className="bg-white rounded-[16px] md:rounded-[24px] p-[24px] md:p-[32px] shadow-sm md:shadow-[0_12px_30px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-md transition-shadow group">
               <div className="flex items-center mb-[24px] pb-[16px] border-b border-gray-50">
                 <div className="w-[36px] h-[36px] bg-indigo-50 rounded-xl flex items-center justify-center mr-[12px] text-indigo-600">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
                 <h2 className="text-[17px] md:text-[19px] font-bold text-gray-800">高原经历与预适应</h2>
               </div>
@@ -388,7 +388,7 @@ export default function EvaluatePage() {
             <div className="bg-white rounded-[16px] md:rounded-[24px] p-[24px] md:p-[32px] shadow-sm md:shadow-[0_12px_30px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-md transition-shadow group">
               <div className="flex items-center mb-[24px] pb-[16px] border-b border-gray-50">
                 <div className="w-[36px] h-[36px] bg-teal-50 rounded-xl flex items-center justify-center mr-[12px] text-teal-600">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
                 </div>
                 <h2 className="text-[17px] md:text-[19px] font-bold text-gray-800">行程及体征指标</h2>
               </div>
@@ -400,7 +400,7 @@ export default function EvaluatePage() {
                     <input className="bg-[#f8fafc] border border-[#e2e8f0] focus:border-[#002b5b] focus:ring-[3px] focus:ring-[#002b5b]/10 transition-all rounded-[10px] pl-[12px] pr-[30px] h-[48px] text-[15px] w-full text-gray-800 outline-none placeholder:text-gray-300" type="number" placeholder="起点" value={formData.startAlt} onChange={e => inputChange('startAlt', e.target.value)} />
                     <span className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-400 font-medium text-[12px]">m</span>
                   </div>
-                  <svg className="w-5 h-5 text-gray-400 rotate-90 sm:rotate-0 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  <svg className="w-5 h-5 text-gray-400 rotate-90 sm:rotate-0 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   <div className="relative flex-1">
                     <input className="bg-[#f8fafc] border border-[#e2e8f0] focus:border-[#002b5b] focus:ring-[3px] focus:ring-[#002b5b]/10 transition-all rounded-[10px] pl-[12px] pr-[30px] h-[48px] text-[15px] w-full text-gray-800 outline-none placeholder:text-gray-300" type="number" placeholder="至高点" value={formData.maxAlt} onChange={e => inputChange('maxAlt', e.target.value)} />
                     <span className="absolute right-[12px] top-1/2 -translate-y-1/2 text-gray-400 font-medium text-[12px]">m</span>
@@ -451,7 +451,7 @@ export default function EvaluatePage() {
             <div className="bg-white rounded-[16px] md:rounded-[24px] p-[24px] md:p-[32px] shadow-sm md:shadow-[0_12px_30px_rgba(0,0,0,0.03)] border border-gray-100 hover:shadow-md transition-shadow group">
               <div className="flex items-center mb-[20px]">
                 <div className="w-[32px] h-[32px] bg-rose-50 rounded-xl flex items-center justify-center mr-[12px] text-rose-500">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                 </div>
                 <h2 className="text-[17px] md:text-[19px] font-bold text-gray-800">用药情况说明</h2>
               </div>
@@ -547,7 +547,7 @@ export default function EvaluatePage() {
           >
             {/* Shimmer Effect */}
             <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shimmer" />
-            <svg className="w-6 h-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            <svg className="w-6 h-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
             启动智慧模型生成报告
           </button>
           <div className="text-[12px] md:text-[13px] text-gray-400 mt-[24px] uppercase tracking-widest font-semibold flex items-center justify-center gap-4">
