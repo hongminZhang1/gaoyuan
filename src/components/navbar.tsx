@@ -58,6 +58,8 @@ export function Navbar() {
             <DropdownItem href="/health/evaluate" label="身体健康评估" />
           </NavDropdown>
 
+          <NavItem href="/knowledge" label="知识库" active={pathname === "/knowledge"} />
+
           {/* AI 助手 - 桌面端 (Removed) */}
 
           {username ? (
@@ -111,6 +113,8 @@ export function Navbar() {
               <MobileNavItem href="/health/cure" label="反应与救治" active={pathname === "/health/cure"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/evaluate" label="健康评估" active={pathname === "/health/evaluate"} onClick={() => setMobileOpen(false)} indent />
             </MobileNavGroup>
+            
+            <MobileNavItem href="/knowledge" label="知识库" active={pathname === "/knowledge"} onClick={() => setMobileOpen(false)} />
             
             {username ? (
               <div className="mt-2 px-4 pt-4 border-t border-gray-100 pb-4 bg-gray-50">

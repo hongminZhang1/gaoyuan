@@ -18,7 +18,7 @@ export function HeroCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 2000);
     return () => clearInterval(timer);
   }, []);
 
@@ -62,7 +62,7 @@ export function HeroCarousel() {
         </div>
       </div>
 
-      {/* 轮播指示�?*/}
+      {/* 轮播指示?*/}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {images.map((_, index) => (
           <button
