@@ -18,7 +18,7 @@ export function HeroCarousel() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(timer);
   }, []);
 
