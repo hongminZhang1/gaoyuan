@@ -32,7 +32,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="fixed bottom-0 md:bottom-auto md:sticky md:top-0 z-50 w-full bg-white/95 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-100 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.1)] md:shadow-sm text-slate-800 transition-all duration-300 pb-safe">
+    <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.1)] md:shadow-sm text-slate-800 transition-all duration-300 pb-safe">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14 md:h-[72px]">
         {/* Logo - Desktop only or small on mobile */}
         <div className="logo flex items-center shrink-0">
@@ -63,7 +63,7 @@ export function Navbar() {
           {username ? (
             <li className="flex items-center h-full pl-6 gap-2 border-l border-gray-200 ml-4">
               <span className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
-                <span className="bg-[#e2e8f0] p-1.5 rounded-full"><User className="w-4 h-4 text-[#1c3c66]" /></span>
+                <span className="bg-[#e2e8f0] p-1.5 rounded-full"><User className="w-4 h-4 text-[#2563eb]" /></span>
                 {username}
               </span>
               <button
@@ -76,7 +76,7 @@ export function Navbar() {
             </li>
           ) : (
             <li className="flex items-center h-full pl-6 border-l border-gray-200 ml-4">
-               <Link href="/auth/login" className="flex items-center justify-center bg-[#1c3c66] hover:bg-[#152e4d] text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-md hover:shadow-lg">
+               <Link href="/auth/login" className="flex items-center justify-center bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-md hover:shadow-lg">
                  登录 / 注册
                </Link>
             </li>
@@ -85,7 +85,7 @@ export function Navbar() {
 
         {/* 移动端汉堡按钮 */}
         <button
-          className="md:hidden p-2 text-slate-600 hover:text-[#1c3c66] transition-colors"
+          className="md:hidden p-2 text-slate-600 hover:text-[#2563eb] transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="切换菜单"
         >
@@ -93,9 +93,9 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* 移动端展开菜单 (向上展开) */}
+      {/* 移动端展开菜单 (向下展开) */}
       {mobileOpen && (
-        <div className="md:hidden bg-white shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)] absolute w-full left-0 bottom-full rounded-t-2xl overflow-hidden border-t border-gray-100">
+        <div className="md:hidden bg-white shadow-lg absolute w-full left-0 top-full rounded-b-2xl overflow-hidden border-b border-gray-100">
           <ul className="flex flex-col py-2 max-h-[75vh] overflow-y-auto overscroll-contain">
             <MobileNavItem href="/" label="首页" active={pathname === "/"} onClick={() => setMobileOpen(false)} />
             
@@ -115,7 +115,7 @@ export function Navbar() {
             {username ? (
               <div className="mt-2 px-4 pt-4 border-t border-gray-100 pb-4 bg-gray-50">
                 <div className="flex items-center gap-2 mb-4 text-slate-700 font-medium">
-                  <span className="bg-[#cbd5e1] p-1.5 rounded-full"><User className="w-5 h-5 text-[#1c3c66]" /></span>
+                  <span className="bg-[#cbd5e1] p-1.5 rounded-full"><User className="w-5 h-5 text-[#2563eb]" /></span>
                   {username}
                 </div>
                 <button
@@ -128,7 +128,7 @@ export function Navbar() {
               </div>
             ) : (
               <div className="p-4 mt-2 border-t border-gray-100">
-                 <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center w-full bg-[#1c3c66] text-white px-5 py-3 rounded-xl font-medium shadow-md">
+                 <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center w-full bg-[#2563eb] text-white px-5 py-3 rounded-xl font-medium shadow-md">
                    登录 / 注册
                  </Link>
               </div>
@@ -147,7 +147,7 @@ function NavItem({ href, label, active }: { href: string; label: string; active?
         href={href}
         className={cn(
           "flex items-center px-4 h-full text-[15px] transition-colors",
-          active ? "text-[#1c3c66] font-bold" : "text-slate-600 font-medium hover:text-[#1c3c66]"
+          active ? "text-[#2563eb] font-bold" : "text-slate-600 font-medium hover:text-[#2563eb]"
         )}
       >
         <span>{label}</span>
@@ -162,7 +162,7 @@ function NavDropdown({ label, children, active }: { label: string; children: Rea
         <button
             className={cn(
                "flex items-center px-4 h-full text-[15px] transition-colors focus:outline-none whitespace-nowrap",
-               active ? "text-[#1c3c66] font-bold" : "text-slate-600 font-medium group-hover:text-[#1c3c66]"
+               active ? "text-[#2563eb] font-bold" : "text-slate-600 font-medium group-hover:text-[#2563eb]"
             )}
         >
             <span>{label}</span>
@@ -183,7 +183,7 @@ function NavDropdown({ label, children, active }: { label: string; children: Rea
 function DropdownItem({ href, label }: { href: string; label: string }) {
   return (
     <li>
-      <Link href={href} className="flex items-center px-5 py-2.5 hover:bg-slate-50 text-slate-600 hover:text-[#1c3c66] text-sm transition-colors cursor-pointer">
+      <Link href={href} className="flex items-center px-5 py-2.5 hover:bg-slate-50 text-slate-600 hover:text-[#2563eb] text-sm transition-colors cursor-pointer">
         {label}
       </Link>
     </li>
@@ -198,8 +198,8 @@ function MobileNavItem({ href, label, active, onClick, indent }: { href: string;
         onClick={onClick}
         className={cn(
           "block py-3.5 text-[15px] font-medium transition-colors cursor-pointer",
-          active ? "text-[#1c3c66] bg-slate-50" : "text-slate-700 hover:bg-slate-50",
-          indent ? "pl-10 pr-6 border-l-2 border-transparent hover:border-[#1c3c66]" : "px-6"
+          active ? "text-[#2563eb] bg-slate-50" : "text-slate-700 hover:bg-slate-50",
+          indent ? "pl-10 pr-6 border-l-2 border-transparent hover:border-[#2563eb]" : "px-6"
         )}
       >
         {label}
@@ -215,7 +215,7 @@ function MobileNavGroup({ label, children, defaultOpen }: { label: string; child
       <button
         className={cn(
           "w-full flex items-center justify-between px-6 py-3.5 transition-colors font-medium text-[15px]",
-          open ? "text-[#1c3c66]" : "text-slate-700 hover:bg-slate-50"
+          open ? "text-[#2563eb]" : "text-slate-700 hover:bg-slate-50"
         )}
         onClick={() => setOpen(!open)}
       >

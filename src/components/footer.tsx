@@ -7,7 +7,7 @@ export function Footer() {
           <p className="text-sm text-slate-400">云端之境，安全随行 —— 为您的西藏/川西之旅保驾护航</p>
         </div>
         <div className="text-sm text-slate-400 md:text-right">
-          <p className="mb-1">版权所有 &copy; 厦门大学 高原旅游小挑团队</p>
+          <p className="mb-1">版权所有 &copy; 厦门大学 高原旅游团队</p>
           <p>指导老师：张家兴</p>
         </div>
       </div>

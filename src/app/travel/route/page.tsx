@@ -74,7 +74,7 @@ export default function RoutePage() {
 
   return (
     <div className="flex flex-col space-y-4 p-4 min-h-screen">
-      <h1 className="text-2xl font-bold border-b pb-2 mb-4 border-[#d9bb79] text-[#1c3c66]">
+      <h1 className="text-2xl font-bold border-b pb-2 mb-4 border-[#3b82f6] text-[#2563eb]">
         线路指南 - 3D地图
       </h1>
       

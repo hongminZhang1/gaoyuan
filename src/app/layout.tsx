@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSansSC = Noto_Sans_SC({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"] });
 
 export const metadata: Metadata = {
-  title: "高原旅游网",
-  description: "厦门大学 高原旅游小挑团队",
+  title: "高原旅游网 - 医疗相伴",
+  description: "医疗科技赋能高原旅行，提供专业健康评估与全方位防范指南",
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={cn(inter.className, "bg-gray-50 text-slate-900 min-h-screen flex flex-col font-sans pb-14 md:pb-0")}>
+      <body className={cn(notoSansSC.className, "bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans")}>
         <Navbar />
         <main className="flex-1 w-full flex flex-col">
           {children}

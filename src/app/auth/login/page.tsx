@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 type Tab = 'login' | 'register';
 
 const inputClass =
-  'mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-[#1c3c66] focus:ring-1 focus:ring-[#1c3c66] transition bg-white';
+  'mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition bg-white';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -60,7 +60,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
           {/* 顶部装饰条 */}
-          <div className="h-[3px] bg-[#1c3c66]" />
+          <div className="h-[3px] bg-[#2563eb]" />
 
           {/* Tab 切换 */}
           <div className="flex border-b border-gray-200">
@@ -71,7 +71,7 @@ export default function LoginPage() {
                 onClick={() => switchTab(t)}
                 className={`flex-1 py-3 text-sm font-semibold transition-colors ${
                   tab === t
-                    ? 'text-[#1c3c66] border-b-2 border-[#1c3c66] -mb-px bg-white'
+                    ? 'text-[#2563eb] border-b-2 border-[#2563eb] -mb-px bg-white'
                     : 'text-gray-400 hover:text-gray-600 bg-gray-50'
                 }`}
               >
@@ -129,7 +129,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 rounded text-sm font-semibold text-white bg-[#1c3c66] hover:bg-[#3c5699] focus:outline-none focus:ring-2 focus:ring-[#3c5699] focus:ring-offset-2 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full py-2 px-4 rounded text-sm font-semibold text-white bg-[#2563eb] hover:bg-[#3b82f6] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? '处理中…' : tab === 'login' ? '登录' : '注册'}
             </button>
@@ -139,11 +139,11 @@ export default function LoginPage() {
         <p className="mt-4 text-center text-sm text-gray-400">
           {tab === 'login' ? (
             <>还没有账号？{' '}
-              <button type="button" onClick={() => switchTab('register')} className="text-[#3c5699] hover:underline">立即注册</button>
+              <button type="button" onClick={() => switchTab('register')} className="text-[#3b82f6] hover:underline">立即注册</button>
             </>
           ) : (
             <>已有账号？{' '}
-              <button type="button" onClick={() => switchTab('login')} className="text-[#3c5699] hover:underline">去登录</button>
+              <button type="button" onClick={() => switchTab('login')} className="text-[#3b82f6] hover:underline">去登录</button>
             </>
           )}
         </p>

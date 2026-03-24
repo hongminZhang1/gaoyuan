@@ -24,7 +24,7 @@ export default function ArticlePage({ params }: PageProps) {
     <article className="max-w-[740px] mx-auto py-2">
       <div className="bg-white rounded-sm overflow-hidden border border-gray-200 shadow-sm">
         {/* 顶部蓝色装饰条 */}
-        <div className="h-[3px] bg-[#1c3c66]" />
+        <div className="h-[3px] bg-[#2563eb]" />
         <div className="px-6 md:px-14 py-8 md:py-10 article-prose">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {article.content}
