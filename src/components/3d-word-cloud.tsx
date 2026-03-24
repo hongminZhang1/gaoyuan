@@ -93,72 +93,89 @@ export function WordCloud3D() {
     
     const currentContainer = containerRef.current;
 
-    // Destroy existing instance in strict mode
-    if (tagCloudInstance.current) {
-        try { tagCloudInstance.current.destroy(); } catch (error) { void error; }
-    }
-    currentContainer.innerHTML = '';
+    const initCloud = () => {
+        // Destroy existing instance in strict mode
+        if (tagCloudInstance.current) {
+            try { tagCloudInstance.current.destroy(); } catch (error) { void error; }
+        }
+        currentContainer.innerHTML = '';
 
-    const words = Object.keys(wordData);
+        const words = Object.keys(wordData);
 
-    // Map values to font sizes
-    const getFontSize = (val: number) => {
-        const minSize = 10;
-        const maxSize = 24;
-        return minSize + ((val - minVal) / (maxVal - minVal)) * (maxSize - minSize);
-    };
+        // Map values to font sizes
+        const getFontSize = (val: number) => {
+            const minSize = 10;
+            const maxSize = 24;
+            return minSize + ((val - minVal) / (maxVal - minVal)) * (maxSize - minSize);
+        };
 
-    // Color palette for tech style
-    const colors = ["#00f3ff", "#0088ff", "#4db8ff", "#99d6ff", "#00e676", "#b2ff59"];
-    
-    // Some TagCloud versions treat text as plain text. 
-    // Luckily it returns the DOM elements in some callbacks or we can apply it right after.
-    const options = {
-      radius: window.innerWidth < 768 ? 150 : 300,
-      maxSpeed: "normal" as const,
-      initSpeed: "slow" as const,
-      direction: 135,
-      keep: true,
-      useContainerInlineStyles: false,
-    };
+        // Color palette for tech style
+        const colors = ["#00f3ff", "#0088ff", "#4db8ff", "#99d6ff", "#00e676", "#b2ff59"];
+        
+        // Calculate dynamic radius
+        const width = window.innerWidth;
+        const radius = width < 600 ? width / 2 - 20 : 300;
 
-    tagCloudInstance.current = TagCloud(currentContainer as unknown as Element[], words, options);
+        const options = {
+          radius: radius,
+          maxSpeed: "normal" as const,
+          initSpeed: "slow" as const,
+          direction: 135,
+          keep: true,
+          useContainerInlineStyles: false,
+        };
 
-    const applyStyles = () => {
-        if (!currentContainer) return;
-        const items = currentContainer.querySelectorAll('.tagcloud--item');
-        items.forEach((item, i) => {
-            const word = words[i];
-            const val = wordData[word];
-            const size = getFontSize(val);
-            const color = colors[i % colors.length];
-            const el = item as HTMLElement;
-            
-            el.style.fontSize = `${size}px`;
-            el.style.color = color;
-            el.style.textShadow = `0 0 10px ${color}80, 0 0 20px ${color}40`;
-            el.style.fontWeight = "bold";
-            el.style.fontFamily = "system-ui, sans-serif";
-            el.style.cursor = "pointer";
-            el.style.transition = "color 0.2s, text-shadow 0.2s, transform 0s"; // Important: don't transition transform because TagCloud updates it constantly
-            
-            // Hover effects
-            el.onmouseenter = () => {
-                el.style.color = "#ffffff";
-                el.style.textShadow = `0 0 15px #ffffff, 0 0 30px #ffffff, 0 0 50px #00f3ff`;
-            };
-            el.onmouseleave = () => {
+        tagCloudInstance.current = TagCloud(currentContainer as unknown as Element[], words, options);
+
+        const applyStyles = () => {
+            if (!currentContainer) return;
+            const items = currentContainer.querySelectorAll('.tagcloud--item');
+            items.forEach((item, i) => {
+                const word = words[i];
+                const val = wordData[word];
+                // Slightly smaller fonts on mobile
+                const sizeScale = width < 600 ? 0.75 : 1;
+                const size = getFontSize(val) * sizeScale;
+                const color = colors[i % colors.length];
+                const el = item as HTMLElement;
+                
+                el.style.fontSize = `${size}px`;
                 el.style.color = color;
                 el.style.textShadow = `0 0 10px ${color}80, 0 0 20px ${color}40`;
-            };
-        });
+                el.style.fontWeight = "bold";
+                el.style.fontFamily = "system-ui, sans-serif";
+                el.style.cursor = "pointer";
+                el.style.transition = "color 0.2s, text-shadow 0.2s, transform 0s"; // Important: don't transition transform because TagCloud updates it constantly
+                
+                // Hover effects
+                el.onmouseenter = () => {
+                    el.style.color = "#ffffff";
+                    el.style.textShadow = `0 0 15px #ffffff, 0 0 30px #ffffff, 0 0 50px #00f3ff`;
+                };
+                el.onmouseleave = () => {
+                    el.style.color = color;
+                    el.style.textShadow = `0 0 10px ${color}80, 0 0 20px ${color}40`;
+                };
+            });
+        };
+        
+        // TagCloud takes a short time to construct DOM nodes
+        setTimeout(applyStyles, 100);
     };
-    
-    // TagCloud takes a short time to construct DOM nodes
-    const timeoutId = setTimeout(applyStyles, 100);
+
+    initCloud();
+
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initCloud, 200);
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
-        clearTimeout(timeoutId);
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(resizeTimer);
         if (tagCloudInstance.current) {
             try {
                 tagCloudInstance.current.destroy();
@@ -171,7 +188,7 @@ export function WordCloud3D() {
   }, []);
 
   return (
-    <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden bg-transparent">
+    <div className="relative w-full h-[400px] md:h-[600px] flex items-center justify-center overflow-hidden bg-transparent">
         <style jsx global>{`
             .tagcloud {
                 display: inline-block;

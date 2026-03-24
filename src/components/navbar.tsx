@@ -18,10 +18,20 @@ export function Navbar() {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   useEffect(() => {
     setUsername(getAuthUserFromCookie());
   }, [pathname]);
+
+  // Set default open group based on current path
+  useEffect(() => {
+    if (mobileOpen) {
+      if (pathname?.startsWith("/travel")) setOpenGroup("travel");
+      else if (pathname?.startsWith("/health")) setOpenGroup("health");
+      else setOpenGroup(null);
+    }
+  }, [mobileOpen, pathname]);
 
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -95,20 +105,28 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* 移动端展开菜单 (向下展开) */}
+      {/* 移动端展开菜单 (全屏深蓝背景) */}
       {mobileOpen && (
-        <div className="md:hidden bg-white shadow-lg absolute w-full left-0 top-full rounded-b-2xl overflow-hidden border-b border-gray-100">
-          <ul className="flex flex-col py-2 max-h-[75vh] overflow-y-auto overscroll-contain">
+        <div className="md:hidden bg-[#0a192f] fixed inset-0 top-14 w-full h-[calc(100vh-3.5rem)] overflow-hidden z-40">
+          <ul className="flex flex-col py-6 px-4 max-h-[calc(100vh-3.5rem)] overflow-y-auto overscroll-contain">
             <MobileNavItem href="/" label="首页" active={pathname === "/"} onClick={() => setMobileOpen(false)} />
             
-            <MobileNavGroup label="高原旅游" defaultOpen={!!pathname?.startsWith("/travel")}>
+            <MobileNavGroup 
+              label="高原旅游" 
+              isOpen={openGroup === "travel"} 
+              onToggle={() => setOpenGroup(openGroup === "travel" ? null : "travel")}
+            >
               <MobileNavItem href="/travel/scenery" label="高原风光" active={pathname === "/travel/scenery"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/environment" label="环境特点" active={pathname === "/travel/environment"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/route" label="线路指南" active={pathname === "/travel/route"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/travel/traffic" label="交通选择" active={pathname === "/travel/traffic"} onClick={() => setMobileOpen(false)} indent />
             </MobileNavGroup>
             
-            <MobileNavGroup label="高原健康" defaultOpen={!!pathname?.startsWith("/health")}>
+            <MobileNavGroup 
+              label="高原健康" 
+              isOpen={openGroup === "health"} 
+              onToggle={() => setOpenGroup(openGroup === "health" ? null : "health")}
+            >
               <MobileNavItem href="/health/study" label="反应研究文献" active={pathname === "/health/study"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/cure" label="反应与救治" active={pathname === "/health/cure"} onClick={() => setMobileOpen(false)} indent />
               <MobileNavItem href="/health/evaluate" label="健康评估" active={pathname === "/health/evaluate"} onClick={() => setMobileOpen(false)} indent />
@@ -117,22 +135,22 @@ export function Navbar() {
             <MobileNavItem href="/knowledge" label="知识图谱" active={pathname === "/knowledge"} onClick={() => setMobileOpen(false)} />
             
             {username ? (
-              <div className="mt-2 px-4 pt-4 border-t border-gray-100 pb-4 bg-gray-50">
-                <div className="flex items-center gap-2 mb-4 text-slate-700 font-medium">
-                  <span className="bg-[#cbd5e1] p-1.5 rounded-full"><User className="w-5 h-5 text-[#2563eb]" /></span>
+              <div className="mt-6 px-4 pt-6 border-t border-slate-700/50 pb-4">
+                <div className="flex items-center gap-3 mb-6 text-slate-200 font-medium tracking-wide">
+                  <span className="bg-slate-700/50 p-2 rounded-full"><User className="w-5 h-5 text-[#00f3ff]" /></span>
                   {username}
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-slate-700 rounded-lg shadow-sm hover:bg-gray-50 transition-colors font-medium"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 rounded-xl transition-colors font-medium tracking-wide"
                 >
                   <LogOut className="w-4 h-4" />
                   退出登录
                 </button>
               </div>
             ) : (
-              <div className="p-4 mt-2 border-t border-gray-100">
-                 <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center w-full bg-[#2563eb] text-white px-5 py-3 rounded-xl font-medium shadow-md">
+              <div className="mt-8 border-t border-slate-700/50 pt-8 px-2">
+                 <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center w-full bg-gradient-to-r from-[#00f3ff] to-[#0088ff] text-slate-900 px-5 py-3.5 rounded-xl font-bold shadow-[0_0_20px_rgba(0,136,255,0.4)]">
                    登录 / 注册
                  </Link>
               </div>
@@ -201,9 +219,9 @@ function MobileNavItem({ href, label, active, onClick, indent }: { href: string;
         href={href}
         onClick={onClick}
         className={cn(
-          "block py-3.5 text-[15px] font-medium transition-colors cursor-pointer",
-          active ? "text-[#2563eb] bg-slate-50" : "text-slate-700 hover:bg-slate-50",
-          indent ? "pl-10 pr-6 border-l-2 border-transparent hover:border-[#2563eb]" : "px-6"
+          "block py-4 text-[16px] font-medium transition-colors cursor-pointer rounded-xl my-1",
+          active ? "text-[#00f3ff] bg-slate-800/50" : "text-slate-300 hover:bg-slate-800/30 hover:text-white",
+          indent ? "pl-12 pr-6 border-l-2 border-transparent hover:border-[#00f3ff]" : "px-6"
         )}
       >
         {label}
@@ -212,22 +230,21 @@ function MobileNavItem({ href, label, active, onClick, indent }: { href: string;
   );
 }
 
-function MobileNavGroup({ label, children, defaultOpen }: { label: string; children: React.ReactNode; defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(!!defaultOpen);
+function MobileNavGroup({ label, children, isOpen, onToggle }: { label: string; children: React.ReactNode; isOpen: boolean; onToggle: () => void }) {
   return (
-    <li>
+    <li className="my-1">
       <button
         className={cn(
-          "w-full flex items-center justify-between px-6 py-3.5 transition-colors font-medium text-[15px]",
-          open ? "text-[#2563eb]" : "text-slate-700 hover:bg-slate-50"
+          "w-full flex items-center justify-between px-6 py-4 transition-colors font-medium text-[16px] rounded-xl hover:bg-slate-800/30",
+          isOpen ? "text-[#00f3ff] bg-slate-800/30" : "text-slate-300 hover:text-white"
         )}
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
       >
         {label}
-        <ChevronDown className={cn("w-5 h-5 transition-transform duration-200", open && "rotate-180")} />
+        <ChevronDown className={cn("w-5 h-5 transition-transform duration-300", isOpen && "rotate-180")} />
       </button>
-      <div className={cn("overflow-hidden transition-all duration-300", open ? "max-h-[500px]" : "max-h-0")}>
-        <ul className="bg-slate-50/50 pb-2">
+      <div className={cn("overflow-hidden transition-all duration-300 ease-in-out", isOpen ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0")}>
+        <ul className="flex flex-col gap-1 pb-2">
           {children}
         </ul>
       </div>
