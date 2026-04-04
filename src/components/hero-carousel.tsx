@@ -35,7 +35,6 @@ export function HeroCarousel() {
             src={src}
             alt={`高原风光 ${index + 1}`}
             fill
-            unoptimized
             priority={index === 0}
             unoptimized
             sizes="100vw"
