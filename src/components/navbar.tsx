@@ -69,6 +69,7 @@ export function Navbar() {
           </NavDropdown>
 
           <NavItem href="/knowledge" label="知识图谱" active={pathname === "/knowledge"} />
+          <NavItem href="/expert" label="专家团队" active={pathname === "/expert"} />
 
           {/* AI 助手 - 桌面端 (Removed) */}
 
@@ -133,6 +134,7 @@ export function Navbar() {
             </MobileNavGroup>
             
             <MobileNavItem href="/knowledge" label="知识图谱" active={pathname === "/knowledge"} onClick={() => setMobileOpen(false)} />
+            <MobileNavItem href="/expert" label="专家团队" active={pathname === "/expert"} onClick={() => setMobileOpen(false)} />
             
             {username ? (
               <div className="mt-6 px-4 pt-6 border-t border-slate-700/50 pb-4">
